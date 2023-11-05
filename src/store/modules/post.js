@@ -2,15 +2,27 @@ let VueCookies = require('vue-cookies')
 export default({
     namespaced: true,
     state:{
-        LastPost: {}
+        dataPost: []
     },
     mutations:{
-        setLastPost(state,payload){
+        /*setLastPost(state,payload){
             state.LastPost = payload
+        },*/
+        setDataPost(state, payload){
+            state.dataPost = payload
         }
     },
+    getters: {
+        LastPost: state =>{
+            return state.dataPost[state.dataPost.length - 1]
+        },
+        LastedPosts: state =>{
+            return state.dataPost.slice(-3)
+        }
+
+    },
     actions: {
-        async all(){
+        async all({commit}){
             try{
                 //recover token
                 let token = VueCookies.get('token')
@@ -22,20 +34,23 @@ export default({
                         'auth-token': token
                     }
                 })
-                const response = await res.json()
-                
-
-                return response
+                const response = await res.json()                
+                commit("setDataPost", response.data.posts)
             }catch(e) {
                 console.log(e)
             }
         },
-        async last(){
+        /*async last(){
             let data = await this.all()
+            //console.log(data.data.posts.slice(length - 4, length - 1))
+            const post = {
+                last: data.data.posts.pop(),
+                lastedPost: data.data.posts.slice(length - 4, length - 1)
+            }
 
-            return data.data.posts.pop()
+            return post
 
-        },
+        },*/
         async one(id){
             try{
                 //recover token
@@ -53,6 +68,22 @@ export default({
 
                 return response
             }catch(e) {
+                console.log(e)
+            }
+        },
+        async oneUser(id){
+            try{
+                const res = await fetch(`http://localhost:3000/api/blog/posts/one/user?id=${id}`, {
+                    method:'GET',
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                })
+
+                const response = await res.json()
+                return response
+
+            }catch(e){
                 console.log(e)
             }
         }

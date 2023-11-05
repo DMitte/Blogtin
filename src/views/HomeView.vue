@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <navbar :img="this.imgUserPath" />
+    <navbar :img="this.getImgUrlMy" />
     <div class="main">
       <div class="slogan">
         <h1>WELCOME TO BLOGTIN</h1>
@@ -10,7 +10,7 @@
         </p>
       </div>
       <section class="lastArticle">
-        <articleC :isSmall="false" v-bind:DataPost="lastPost" />
+       <articleC v-if="this.LastPost" :isSmall="false" :DataPost="this.LastPost" :key="4"/>
       </section>
 
       <section class="bpostArticle">
@@ -26,7 +26,7 @@
           ></router-link>
         </div>
         <div class="mainSection">
-          <articleC :isSmall="true" v-for="(item, index) in lastedPostes" :key="index" :DataPost="item"/>
+          <articleC :isSmall="true" v-for="(item, index) in this.LastedPosts" :key="index" :DataPost="item"/>
         </div>
       </section>
 
@@ -58,49 +58,26 @@
 import navbar from "@/components/navComponent.vue";
 import footerC from "@/components/footerComponent.vue";
 import articleC from "@/components/articleComponent.vue";
-import userModule from "@/store/modules/user";
 
-import postModule from "@/store/modules/post";
+import { mapState, mapGetters } from "vuex";
 
 //import dbRequest from '@/config/db'
 
 export default {
-  data() {
-    return {
-      login: false,
-      imgUserPath: "",
-      lastPost: {},
-      lastedPostes: {},
-    };
-  },
   name: "HomeView",
   components: {
     navbar,
     footerC,
     articleC,
   },
+  
+  computed: {
+    ...mapGetters('user', ['getImgUrlMy']),
+    ...mapGetters('post', ['LastPost','LastedPosts']),
+    ...mapState(['IsLogin']),
+    ...mapState('user', ['myUserData']),
 
-  async created() {
-    //poner para que se ejecute solo cuando este la cookie con el token
-    userModule.actions.my().then((r) => {
-      this.imgUserPath = r.data.imgUrl;
-    });
-    const last = await postModule.actions.last();
-
-    const dataAuthor = await userModule.actions.one(last.author[0]);
-    last.author = dataAuthor.data;
-
-    this.lastPost = last;
-    
-    postModule.actions.all().then((r) =>{
-      this.lastedPostes = r.data.posts.slice(length - 4, length - 1)      
-    })
-
-    if (this.$cookies.isKey("token") === true) {
-      this.login = true;
-    }
-  },
-  async mounted() {},
+  }
 };
 </script>
 

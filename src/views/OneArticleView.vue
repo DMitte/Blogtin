@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbarc :img="this.imgUserPath" />
+    <navbarc :img="this.getImgUrlMy" />
 
     <div class="main">
       <div class="top">
@@ -47,8 +47,8 @@
 <script>
 import navbarc from "@/components/navComponent.vue";
 import footerc from "@/components/footerComponent.vue";
-import userModule from "@/store/modules/user";
 import postModule from "@/store/modules/post";
+import { mapState, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -78,18 +78,19 @@ export default {
     },
   },
   created() {    
-    userModule.actions.my().then((r) => {
-      this.imgUserPath = r.data.imgUrl;
-    });
+
+    
     postModule.actions.one(this.$route.params.id).then(async (r) => {
-      const authorData = await userModule.actions.one(r.data.post.author[0])
+      const authorData = await postModule.actions.oneUser(r.data.post.author[0])
       this.authorPost = authorData.data
 
       this.dataPost = r.data.post;
     });
-
-    
   },
+  computed: {
+    ...mapGetters('user', ['getImgUrlMy']),
+    ...mapState(['IsLogin'])
+  }
 
   
 };

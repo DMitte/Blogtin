@@ -2,9 +2,20 @@ let VueCookies = require('vue-cookies')
 export default({
     namespaced: true,
     state: {
+        myUserData: {}
+    },
+    mutations: {
+        setMyData(state, payload){
+            state.myUserData = payload
+        }
+    },
+    getters: {
+        getImgUrlMy: state => {
+            return state.myUserData.imgUrl;
+        }
     },
     actions:{
-        async my(){
+        async my({commit}){
             try{
                 //recover token
                 let token = VueCookies.get('token')
@@ -17,7 +28,8 @@ export default({
                     }
                 })
                 const response = await res.json()
-                return response
+                commit("setMyData", response.data)
+                
                 
             }catch(e){
                 console.log(e)

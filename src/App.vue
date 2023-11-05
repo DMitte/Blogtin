@@ -1,6 +1,31 @@
 <template>
   <router-view />
 </template>
+<script>
+import {mapActions, mapState} from 'vuex'
+
+
+export default{
+  created(){
+    this.Login()
+    if(this.IsLogin){
+      this.my()
+    }
+    this.all()
+  },
+  methods:{
+    ...mapActions(['Login']),
+    ...mapActions('user',['my']),
+    ...mapActions('post',['all'])
+  },
+  computed: {
+    ...mapState(['IsLogin'])
+  }
+}
+
+
+</script>
+
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200;300;400;500;600;700;800;900&display=swap');

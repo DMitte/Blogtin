@@ -64,12 +64,7 @@ export default {
             usuario: {
                 email: '',
                 password: '',
-                repeat_password: '',
-                name: 'Prueba',
-                lastname: 'Prueba',
-                img: 'defaultImg.jpg',
-                birthday: '1999/01/03',
-                username: 'prueba1',
+                repeat_password: '',                
             },
             emailError: false
         }

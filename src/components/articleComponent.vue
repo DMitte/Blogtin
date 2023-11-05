@@ -2,7 +2,7 @@
   <router-link :to="`/onearticle/${infoPost._id}`">
     <div class="article" v-bind:class="{ small: isSmall }">
       <div class="picture">
-        <img :src="infoPost.imgUrl" alt="Jhon wick picture" />
+        <img :src="infoPost.imgUrl" alt="Jhon wick picture" loading="lazy"/>
       </div>
       <div class="text">
         <div class="infoUser">
@@ -13,7 +13,7 @@
         </div>
         <div class="infoArticle">
           <h3 id="titleArticle">{{ infoPost.title }}</h3>
-          <p id="desArticle">{{ infoPost.description }}</p>
+          <p id="desArticle" > {{ infoPost.description }}</p>
         </div>
         <div class="infoTags">
           <p v-for="(item, index) in infoPost.tags" :key="index">{{ item }}</p>
@@ -23,8 +23,9 @@
   </router-link>
 </template>
 <script>
-import userModule from "@/store/modules/user";
-import postModule from "@/store/modules/post";
+
+import userModule from "@/store/modules/user"
+
 export default {
   data() {
     return {
@@ -37,20 +38,11 @@ export default {
     isSmall: Boolean,
     DataPost: Object,
   },
-  async created() {
-    if (Object.keys(this.DataPost).length === 0) {
-      const last = await postModule.actions.last();
-      const idAuthor = last.author[0];
-      const dataAuthor = await userModule.actions.one(idAuthor);
-
-      this.infoAuthor = dataAuthor.data;
-
-      this.infoPost = last;
-    } else {
-      const idAuthor = this.DataPost.author[0];
-      const dataAuthor = await userModule.actions.one(idAuthor);
-      this.infoAuthor = dataAuthor.data;
-    }
+  
+  async created(){
+    let idUser = this.DataPost.author[0]    
+    let dataUser = await userModule.actions.one(idUser) 
+    this.infoAuthor = dataUser.data    
   },
 };
 </script>
