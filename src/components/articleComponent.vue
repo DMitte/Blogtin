@@ -24,7 +24,7 @@
 </template>
 <script>
 
-import userModule from "@/store/modules/user"
+import postModels from "@/store/modules/post"
 
 export default {
   data() {
@@ -41,7 +41,7 @@ export default {
   
   async created(){
     let idUser = this.DataPost.author[0]    
-    let dataUser = await userModule.actions.one(idUser) 
+    let dataUser = await postModels.actions.oneUser(idUser) 
     this.infoAuthor = dataUser.data    
   },
 };
