@@ -5,6 +5,7 @@ import errorView from '@/views/Error/404View.vue'
 import onearticle from '@/views/OneArticleView.vue'
 import SignInView from '@/views/auth/SignInView.vue'
 import SignUpView from '@/views/auth/SignUpView.vue'
+import CreateView from '@/views/CreateView.vue'
 
 const routes = [
   {
@@ -44,6 +45,11 @@ const routes = [
     path: '/404',
     name: '404error',
     component: errorView
+  },
+  {
+    path: '/post/create',
+    name: 'create',
+    component: CreateView,
   }
 
 ]
