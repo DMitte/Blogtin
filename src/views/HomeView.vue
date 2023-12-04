@@ -16,7 +16,7 @@
       <section class="bpostArticle">
         <div class="titleSection">
           <h4>Blog post</h4>
-          <router-link to="/"
+          <router-link to="/post/all"
             >See all
             <span
               ><img

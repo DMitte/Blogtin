@@ -54,7 +54,8 @@ export default {
     return {
       imgUserPath: "",
       dataPost: {},
-      authorPost: {}
+      authorPost: {},
+      numFilas: 1,
     };
   },
   name: "OneArticleView",
@@ -78,8 +79,6 @@ export default {
     },
   },
   created() {    
-
-    
     postModule.actions.one(this.$route.params.id).then(async (r) => {
       const authorData = await postModule.actions.oneUser(r.data.post.author[0])
       this.authorPost = authorData.data
@@ -90,7 +89,7 @@ export default {
   computed: {
     ...mapGetters('user', ['getImgUrlMy']),
     ...mapState(['IsLogin'])
-  }
+  },
 
   
 };
@@ -164,7 +163,12 @@ export default {
   color: #e7e7e7;
   font-weight: 300;
   font-size: 27px;
-  letter-spacing: 2px;
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  resize: none;  
+  overflow: hidden;
+
 }
 
 .separacion {

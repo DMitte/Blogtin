@@ -12,7 +12,7 @@
                         alt="Cancel icon"></button>
                 <div class="links">
                     <router-link to="/">Home</router-link>
-                    <router-link to="/about">Search</router-link>
+                    <router-link to="/post/all">Search</router-link>
                     <router-link to="/about">Comunity</router-link>
                 </div>
 

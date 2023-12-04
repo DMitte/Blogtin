@@ -6,6 +6,8 @@ import onearticle from '@/views/OneArticleView.vue'
 import SignInView from '@/views/auth/SignInView.vue'
 import SignUpView from '@/views/auth/SignUpView.vue'
 import CreateView from '@/views/CreateView.vue'
+import AllPostView from '@/views/AllPostView.vue'
+let VueCookies = require('vue-cookies')
 
 const routes = [
   {
@@ -50,6 +52,12 @@ const routes = [
     path: '/post/create',
     name: 'create',
     component: CreateView,
+    meta: {requireAuth: true},
+  },
+  {
+    path: '/post/all',
+    name: 'allPost',
+    component: AllPostView
   }
 
 ]
@@ -57,6 +65,16 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})
+});
 
+/*Redireccionamiento en caso no estar logeado */
+
+router.beforeEach((to, from, next) =>{
+  const rutaProtegida = to.matched.some((record) => record.meta.requireAuth);
+  if(rutaProtegida && VueCookies.get('token') === null){
+    next({name: 'signin'});
+  }else{
+    next();
+  }
+})
 export default router
