@@ -20,7 +20,7 @@ export default({
                 //recover token
                 let token = VueCookies.get('token')
                 
-                const res = await fetch('http://localhost:3000/api/blog/users/my', {
+                const res = await fetch('https://blogtin-back-app.onrender.com/api/blog/users/my', {
                     method:'GET',
                     headers : {
                         "Content-Type": "application/json",
@@ -39,7 +39,7 @@ export default({
         async one(id){
             try{                
                 let token = VueCookies.get('token')
-                const res = await fetch(`http://localhost:3000/api/blog/users/one?id=${id}`,{
+                const res = await fetch(`https://blogtin-back-app.onrender.com/api/blog/users/one?id=${id}`,{
                     method:"GET",
                     headers : {
                         "Content-Type": "application/json",
