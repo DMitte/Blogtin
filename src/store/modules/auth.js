@@ -14,7 +14,7 @@ export default{
     actions: {
         async register(usuario){
             try{
-                const res = await fetch('http://localhost:3000/api/blog/auth/register',{
+                const res = await fetch('https://blogtin-back-app.onrender.com/api/blog/auth/register',{
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(usuario),
@@ -29,7 +29,7 @@ export default{
         async login({commit}, usuario){
 
             try{    
-                const res = await fetch("http://localhost:3000/api/blog/auth/login", {
+                const res = await fetch("https://blogtin-back-app.onrender.com/api/blog/auth/login", {
                     method:"post",
                     headers:{"Content-type":"application/json"},
                     body:JSON.stringify(usuario)
